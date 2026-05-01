@@ -10,9 +10,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/feede90dd1.js" crossorigin="anonymous"></script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+</style>
+
+<style> <!-- PRINT -->
+@media print {
+
+    body {
+        background: white;
+    }
+
+    #searchBox, 
+    #data, 
+    #printBtn, 
+    button {
+        display: none !important;
+    }
+
+    #info {
+        margin-left: 10% !important;
+        font-size: 14px;
+    }
+
+    #speaking-table {
+        width: 90% !important;
+    }
+
+}
 </style>
 
 </head>
@@ -44,6 +71,7 @@
 <input id="searchBox" type="text" style="width: 110px; text-align: center; font-family: 'Play', sans-serif;">
 <button id="data" style="font-family: 'Play', sans-serif;">Buscar</button>
 <button style="font-family: 'Play', sans-serif;" onclick="location.reload()">Nueva Busqueda</button>
+<button id="printBtn" style="font-family: 'Play', sans-serif; display:none;" title="Save PDF/Print"><i class="fa-solid fa-print"></i></button>
 
 <h5 id="info" style="font-family: 'Play', sans-serif; color: #004890; font-weight: bold; margin-left: 0px; text-align: left; margin-top: 3px; margin-left: 30%;"></h5>
 
@@ -66,8 +94,8 @@ SPEAKING MISTAKES (Structure, Pronunciation and/or Vocabulary)
 var data = [
 
 	<!-- INFO STARTS HERE ------------------------------------------------------->
-	
-{"id": 	1024496008	,"user": {"name": "	ARIAS LOAIZA	JEIMMY NATHALY	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	11,5	","score1": "	4,2	","score2": "	Midterm (10%) = 	2,6	","speaking": "	minced/ mayonaisse/ its has/ it representive the country/ couples/ we're going to talking about/ 1904 (194)/ literature/ they love read/ bAkery/ love laugh/ after finish/ chilean not like that/ 	",}},
+
+	{"id": 	1024496008	,"user": {"name": "	ARIAS LOAIZA	JEIMMY NATHALY	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	11,5	","score1": "	4,2	","score2": "	Midterm (10%) = 	2,6	","speaking": "	minced/ mayonaisse/ its has/ it representive the country/ couples/ we're going to talking about/ 1904 (194)/ literature/ they love read/ bAkery/ love laugh/ after finish/ chilean not like that/ 	",}},
 {"id": 	1028863920	,"user": {"name": "	BALTAN BELTRAN	SARAY GABRIELA	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	7	","score1": "	4,5	","score2": "	Midterm (10%) = 	3,0	","speaking": "	because (of) her job/ right now she just study/ she want work/ supreme-super (?)/ drink it/ alcohol/ because her work/ Elon/ he grow up (past)/ 	",}},
 {"id": 	1013117249	,"user": {"name": "	CERON BELTRAN	SIMON ALEJANDRO	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	12	","score1": "	4,2	","score2": "	Midterm (10%) = 	2,5	","speaking": "	she has 18 years old/ OF her cousin/ she don't believe / she loves the rock/ near of a mall/ usa is/ is conformeit/ asia/ acti'vist/ called/ Tupac have got (past)/ for solute/ incluid/ 	",}},
 {"id": 	1031180543	,"user": {"name": "	CHAVARRO SALCEDO	YESENIA	", "subject": "UPN - CAI2 G3 - 2026-1"	,"limit": "16"	,"absences": "	11	","score1": "	3,9	","score2": "	Midterm (10%) = 	2,2	","speaking": "	plAy/ she work/ she loves cook/ a person polifacetic/ dOing/ 'important/ 'guitar/ identify/ for the other hand/ sEA/ people that is talking/ in the image they are/ reconoceit/ choco'leits/ is more buy (more bought)/ 'important/ comunitarismo/ spain/ against/ removed/ 	",}},
@@ -133,7 +161,7 @@ var data = [
 {"id": 	1006165313	,"user": {"name": "	SANCHEZ YAYA	JENNIFER ALEJANDRA	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	5,5	","score1": "	4,6	","score2": "	2nd Blog Revision - 	4,6	","speaking": "	(Please speak more. I haven't listened to you enough)/ era/ dynamic/ she argue that.../ he mention that../ for communicate/ the teacher have/ most of them has/ asynchronomous/ these blogs doesn't allow/ 	",}},
 {"id": 	1022966474	,"user": {"name": "	SILVA SILVA	KELLY LORENA	", "subject": "UPN - MDR G1 - 2026-1"	,"limit": "9"	,"absences": "	3	","score1": "	4,2	","score2": "	2nd Blog Revision - 	4,5	","speaking": "	usefull (in Canva)/ through/ stUdy/ must to be/ videos/ we decided select.../ but too is easy/	",}},
 {"id": 	1234567890	,"user": {"name": "	SERRANO RAMIREZ	CHRISTIAN	", "subject": "UPN SUBJECTS"	,"limit": "9"	,"absences": "	7	","score1": "	3,7	","score2": "	Midterm (10%) = 	3,7	","speaking": "	archive/ hyena/ hierarchy/ publishers/ literature/ 	",}},
-	
+
 <!-- INFO FINISHES HERE ------------------------------------------------------->
 
 ];
@@ -174,6 +202,25 @@ document.getElementById("data").click();
 }
 });
 
+$("#printBtn").show();
+
+</script>
+
+<script>
+$("#printBtn").click(function(){
+
+    // Optional: Hide elements you don't want in PDF
+    $("#searchBox, #data, #printBtn, button[onclick]").hide();
+
+    // Trigger print (browser will allow "Save as PDF")
+    window.print();
+
+    // Show elements again after printing
+    setTimeout(function(){
+        $("#searchBox, #data, #printBtn, button[onclick]").show();
+    }, 1000);
+
+});
 </script>
 
 <script> 
